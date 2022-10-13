@@ -1,0 +1,208 @@
+﻿
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+
+
+
+@model SampleCore.Core.Model.Person
+
+
+        <style>
+   
+            body {
+                        background-color:lightpink;
+
+                    }
+                    
+            .error{
+                color:darkred;
+            }
+            div {
+                margin-right: 5%;
+                margin-left: 30%
+            }
+
+            label {
+                font-display: block;
+                font-size: large;
+            }
+        </style>
+
+
+
+@using (Html.BeginForm("Index", "Home",FormMethod.Post, new { id = "signupForm", autocomplete = "off" }))
+{
+
+    <div>
+        <label>Firstname  </label>
+        @Html.TextBoxFor(model=>model.firstName)
+
+        <br />
+        <br />
+
+        <label>Middle Name</label>
+        @Html.TextBoxFor(model=>model.middleName)
+
+        <br />
+        <br />
+
+        <label>Last Name</label>
+        @Html.TextBoxFor(model=>model.lastName)
+
+        <br />
+        <br />
+
+
+        <label>Course:</label>
+        @Html.DropDownListFor(model=>model.course,new SelectList(ViewBag.list))
+        <br />
+        <br />
+
+
+        <label>
+            Gender:
+        </label>
+        <br>
+        <label> @Html.RadioButtonFor(m => m.gender,"Male")Male</label>
+
+        <label>@Html.RadioButtonFor(m => m.gender,"Female")Female</label>
+
+        <label>@Html.RadioButtonFor(m => m.gender,"Others")Others</label>
+        <br />
+        <br />
+        <label>Phone</label>
+        @Html.TextBoxFor(model=>model.phone,new{id="phoneno"})
+
+        <br />
+        <br />
+        
+        <label>Address</label>
+        @Html.TextAreaFor(model=>model.address)
+
+        <br />
+        <br />
+        <label>Email</label>
+        @Html.TextBoxFor(model=>model.email)
+
+        <br />
+        <br />
+        <label>Password</label>
+        @Html.TextBoxFor(model=>model.password)
+
+        <br />
+        <br />
+        <label>Retype password</label>
+        @Html.TextBoxFor(model=>model.retypePassword)
+
+        <br />
+        <br />
+        <button type="submit" onclick="SubmitDetails()" style="background-color:red;height:30px;">Save</button>
+       
+       <a href="https://localhost:44316/Home/Read">
+            <button type="button" style="height:contain;background-color: #4CAF50;"> Go Next</button>
+        </a>
+    </div>
+}
+
+
+
+<script>
+
+    $(function() {
+        $("#signupForm").validate({
+
+            rules: {
+
+                firstName: {
+                    required: true,
+                    minlength: 2
+                },
+                 middleName: {
+                    required: true,
+                    minlength: 2
+                },
+                 lastName: {
+                    required: true,
+                    minlength: 2
+                },
+                address: {
+                     required: true,
+                     minlength: 5,
+
+                 },
+                 phone: {
+                    
+                     required: true,
+                     number: true,
+                     maxlength: 10,
+                     minlength: 10,
+
+                 },
+                 email: {
+                     
+                     required: true,
+                     email: true,
+                    
+                 },
+                 password: {
+
+                     required: true,
+                     minlength: 5
+
+                 },
+                 retypePassword: {
+                     required: true,
+                     minlength: 5,
+                     equalTo: "#password" 
+                 },
+
+            },
+
+            messages: {
+
+                firstName: {
+                    required: " Enter a Firstname",
+                    minlength: " Your username must consist of at least 2 characters"
+                },
+                middleName: {
+                    required: " Enter a Middlename",
+                    minlength: " Your username must consist of at least 2 characters"
+                },
+
+                lastName: {
+                    required: " Enter a Lastname",
+                    minlength: " Your username must consist of at least 2 characters"
+                },
+                email: {
+                     required: " Enter a EmailId",
+                     minlength: " Your username must consist of at least 2 characters"
+                 },
+                 phone: {
+                      number: "Enter valid Number",
+                     required: " Enter a Phone Number",
+                     minlength: " Your PhoneNo must consist of at least 10 characters"
+                 },
+                 password: {
+                    
+                     required: " Enter a password",
+                     minlength: " Your password must be consist of at least 5 characters"
+                 },
+                 retypePassword: {
+                     required: " Please enter a password",
+                     minlength: " Your password must be consist of at least 5 characters",
+                     equalTo: " Enter the same password as above"
+                 },
+
+            }
+        });
+    });
+
+   function SubmitDetails() {
+        if ($("#signupForm").validate()) {
+            $("#signupForm").submit();
+        }
+    }
+</script>
+
+   
