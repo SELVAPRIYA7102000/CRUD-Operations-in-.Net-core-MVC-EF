@@ -21,6 +21,48 @@ namespace EFPT.Controllers
         #region   Create table
 
 
+        [HttpGet]
+
+        public IActionResult login()
+
+        {
+
+            PersonLogin loginModel = new PersonLogin();
+
+            return View(loginModel);
+
+        }
+
+        [HttpPost]
+
+        public IActionResult login(PersonLogin loginModel)
+
+        {
+            PersonDBContext testDBContext = new PersonDBContext();
+            var staff = testDBContext.Login.Where(m => m.UserName == loginModel.Name && m.Password == loginModel.Password).FirstOrDefault();
+
+            if (staff != null)
+
+            {
+
+                return RedirectToAction("Index");
+            }
+
+            else
+
+            {
+
+                ViewBag.Message = "Invalid login detail.";
+
+            }
+
+            return View(loginModel);
+
+        }
+
+
+
+
         public IActionResult Index()
         {
             var list = new List<string>() { "CSE", "IT", "ECE", "EEE", "MECH", "AI", "CIVIL" };

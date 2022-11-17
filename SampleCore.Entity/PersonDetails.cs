@@ -16,10 +16,13 @@ namespace SampleCore.Entity
         public string Phone { get; set; }
         public string Address { get; set; }
         public string Email { get; set; }
+        public int? New_Id { get; set; }
         public string Password { get; set; }
         public string Retype_Password { get; set; }
         public bool Is_Deleted { get; set; }
         public DateTime Created_Time_Stamp { get; set; }
         public DateTime Updated_Time_Stamp { get; set; }
+
+        public virtual Login New { get; set; }
     }
 }

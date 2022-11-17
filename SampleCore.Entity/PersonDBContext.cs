@@ -18,6 +18,7 @@ namespace SampleCore.Entity
         {
         }
 
+        public virtual DbSet<Login> Login { get; set; }
         public virtual DbSet<PersonDetails> PersonDetails { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -31,6 +32,21 @@ namespace SampleCore.Entity
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Login>(entity =>
+            {
+                entity.HasKey(e => e.New_Id);
+
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasMaxLength(5)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UserName)
+                    .IsRequired()
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<PersonDetails>(entity =>
             {
                 entity.HasKey(e => e.Person_ID)
@@ -89,6 +105,11 @@ namespace SampleCore.Entity
                     .IsFixedLength();
 
                 entity.Property(e => e.Updated_Time_Stamp).HasColumnType("datetime");
+
+                entity.HasOne(d => d.New)
+                    .WithMany(p => p.PersonDetails)
+                    .HasForeignKey(d => d.New_Id)
+                    .HasConstraintName("FK_PersonDetails_Login");
             });
 
             OnModelCreatingPartial(modelBuilder);
